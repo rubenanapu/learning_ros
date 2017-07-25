@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import rospy
-from rospy_tutorials.srv import AddTwoInts
+from learning_ros.srv import AddTwoInts
 
 
 class AddTwoIntsServiceClient(rospy.ServiceProxy):

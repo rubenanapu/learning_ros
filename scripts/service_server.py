@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import rospy
-from rospy_tutorials.srv import (
+from learning_ros.srv import (
     AddTwoInts, AddTwoIntsResponse
 )
 
