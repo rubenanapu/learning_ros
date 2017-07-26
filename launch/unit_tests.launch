@@ -1,0 +1,3 @@
+<launch>
+    <test test-name="test_example" pkg="learning_ros" type="test_example.py" time-limit="10.0"/>
+</launch>
