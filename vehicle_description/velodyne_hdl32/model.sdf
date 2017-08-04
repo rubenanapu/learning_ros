@@ -71,6 +71,8 @@
 
             <!-- The visual is mostly a copy of the collision -->
             <visual name="top_visual">
+                <!-- Lower the mesh by half the height, and rotate by 90 degrees -->
+                <pose>0 0 -0.0376785 0 0 1.5707</pose>
                 <geometry>
                     <!-- The mesh tag indicates that we will use a 3D mesh as a visual -->
                     <mesh>
