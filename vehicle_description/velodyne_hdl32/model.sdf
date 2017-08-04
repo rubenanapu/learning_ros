@@ -31,11 +31,12 @@
 
             <!-- The visual is mostly a copy of the collision -->
             <visual name="base_visual">
+                <!-- Offset the visual by have the base's height. We are not rotating mesh since symmetrical -->
+                <pose>0 0 -0.029335 0 0 0</pose>
                 <geometry>
-                    <cylinder>
-                        <radius>.04267</radius>
-                        <length>.05867</length>
-                    </cylinder>
+                    <mesh>
+                        <uri>model://velodyne_hdl32/meshes/velodyne_base.dae</uri>
+                    </mesh>
                 </geometry>
             </visual>
         </link>
