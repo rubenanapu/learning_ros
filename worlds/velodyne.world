@@ -18,6 +18,19 @@
 
                 <!-- Offset the base by half the lenght of the cylinder -->
                 <pose>0 0 0.029335 0 0 0</pose>
+
+                <inertial>
+                    <mass>1.2</mass>
+                    <inertia>
+                        <ixx>0.001087473</ixx>
+                        <iyy>0.001087473</iyy>
+                        <izz>0.001092437</izz>
+                        <ixy>0</ixy>
+                        <ixz>0</ixz>
+                        <iyz>0</iyz>
+                    </inertia>
+                </inertial>
+
                 <collision name="base_collision">
                     <geometry>
                         <cylinder>
@@ -45,6 +58,19 @@
                 <!-- Vertically offset the top cylinder by the length of the bottom
                 cylinder and half the length of this cylinder. -->
                 <pose>0 0 0.095455 0 0 0</pose>
+
+                <inertial>
+                    <mass>0.1</mass>
+                    <inertia>
+                        <ixx>0.000090623</ixx>
+                        <iyy>0.000090623</iyy>
+                        <izz>0.000091036</izz>
+                        <ixy>0</ixy>
+                        <ixz>0</ixz>
+                        <iyz>0</iyz>
+                    </inertia>
+                </inertial>
+   
                 <collision name="top_collision">
                     <geometry>
                         <cylinder>
