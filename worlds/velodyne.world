@@ -90,6 +90,21 @@
                         </cylinder>
                     </geometry>
                 </visual>
+
+                <!-- Add a ray sensor, and give it a name -->
+                <sensor type="ray" name="sensor">
+
+                    <!-- Position the ray sensor based on the specification. Also rotate
+                    it by 90 degrees around the X-axis so that the <horizontal> rays
+                    become vertical -->
+                    <pose>0 0 -0.004645 1.5707 0 0</pose>
+
+                    <!-- Enable visualization to see the rays in the GUI -->
+                    <visualize>true</visualize>
+
+                    <!-- Set the update rate of the sensor -->
+                    <update_rate>30</update_rate>
+                </sensor>
             </link>
 
             <!-- Each joint must have a unique name -->
