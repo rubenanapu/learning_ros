@@ -70,7 +70,7 @@
                         <iyz>0</iyz>
                     </inertia>
                 </inertial>
-   
+
                 <collision name="top_collision">
                     <geometry>
                         <cylinder>
@@ -91,6 +91,32 @@
                     </geometry>
                 </visual>
             </link>
+
+            <!-- Each joint must have a unique name -->
+            <joint type="revolute" name="joint">
+
+                <!-- Position the joint at the bottom of the top link -->
+                <pose>0 0 -0.036785 0 0 0</pose>
+
+                <!-- Use the base link as the parent of the joint -->
+                <parent>base</parent>
+
+                <!-- Use the top link as the child of the joint -->
+                <child>top</child>
+
+                <!-- The axis defines the joint's degree of freedom -->
+                <axis>
+                    <!-- Revolve around the z-axis -->
+                    <xyz>0 0 1</xyz>
+
+                    <!-- Limit refers to the range of motion of the joint -->
+                    <limit>
+                        <!-- Use a very large number to indicate a continuous revolution -->
+                        <lower>-10000000000000000</lower>
+                        <upper>10000000000000000</upper>
+                    </limit>
+                </axis>
+            </joint>
         </model>
     </world>
 </sdf>
