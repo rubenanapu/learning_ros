@@ -72,10 +72,13 @@
             <!-- The visual is mostly a copy of the collision -->
             <visual name="top_visual">
                 <geometry>
-                    <cylinder>
-                        <radius>0.04267</radius>
-                        <length>0.07357</length>
-                    </cylinder>
+                    <!-- The mesh tag indicates that we will use a 3D mesh as a visual -->
+                    <mesh>
+                        <!-- The URI should refer to the 3D mesh. The "model:"
+                        URI scheme indicates that the we are referencing a Gazebo
+                        model. -->
+                        <uri>model://velodyne_hdl32/meshes/velodyne_top.dae</uri>
+                    </mesh>
                 </geometry>
             </visual>
 
