@@ -76,6 +76,17 @@ namespace gazebo {
 
         /// \brief A PID controller for the joint.
         private: common::PID pid;
+
+
+        ///////////////////////////////////////////////////////////////////////
+        // Messaging passing infrastructure
+        ///////////////////////////////////////////////////////////////////////
+
+        /// \brief A node used for transport
+        private: transport::NodePtr node;
+
+        /// \brief A subscriber to a named topic.
+        private: transport::SubscriberPtr sub;
     };
 
     // Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin.
