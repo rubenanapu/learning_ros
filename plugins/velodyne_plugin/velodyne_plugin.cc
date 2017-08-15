@@ -57,6 +57,26 @@ namespace gazebo {
             // for demonstration purposes.
             this->model->GetJointController()->SetVelocityTarget(
                     this->joint->GetScopedName(), velocity);
+
+            ///////////////////////////////////////////////////////////////////
+            // Instantiate the subscriber to be able to read from a topic
+            ///////////////////////////////////////////////////////////////////
+
+            // Create the node
+            this->node = transport::NodePtr(new transport::Node());
+
+            #if GAZEBO_MAJOR_VERSION < 8
+                this->node->Init(this->model->GetWorld()->GetName());
+            #else
+                this->node->Init(this->model->GetWorld()->Name());
+            #endif
+
+            // Create a topic name
+            std::string topicName = "~/" + this->model->GetName() + "/vel_cmd";
+
+            // Subscribe to the topic, and register a callback
+            this->sub = this->node->Subscribe(topicName,
+                    &VelodynePlugin::OnMsg, this);
         }
 
         /// \brief Set the velocity of the Velodyne
