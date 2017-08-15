@@ -88,6 +88,14 @@ namespace gazebo {
               this->joint->GetScopedName(), _vel);
         }
 
+        /// \brief Handle incoming message
+        /// \param[in] _msg Repurpose a vector3 message. This function will
+        /// only use the x component.
+        private: void OnMsg(ConstVector3dPtr &_msg)
+        {
+          this->SetVelocity(_msg->x());
+        }
+
         /// \brief Pointer to the model.
         private: physics::ModelPtr model;
 
