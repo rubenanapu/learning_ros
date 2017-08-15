@@ -59,6 +59,15 @@ namespace gazebo {
                     this->joint->GetScopedName(), velocity);
         }
 
+        /// \brief Set the velocity of the Velodyne
+        /// \param[in] _vel New target velocity
+        public: void SetVelocity(const double &_vel)
+        {
+          // Set the joint's target velocity.
+          this->model->GetJointController()->SetVelocityTarget(
+              this->joint->GetScopedName(), _vel);
+        }
+
         /// \brief Pointer to the model.
         private: physics::ModelPtr model;
 
