@@ -32,6 +32,13 @@ namespace gazebo {
             std::cerr << "\nThe velodyne plugin is attach to model[" <<
                     _model->GetName() << "]\n";
 
+            // Default to zero velocity
+            double velocity = 0;
+
+            // Check that the velocity element exists, then read the value
+            if (_sdf->HasElement("velocity"))
+              velocity = _sdf->Get<double>("velocity");
+
             // Store the model pointer for convenience.
             this->model = _model;
 
@@ -49,7 +56,7 @@ namespace gazebo {
             // Set the joint's target velocity. This target velocity is just
             // for demonstration purposes.
             this->model->GetJointController()->SetVelocityTarget(
-                    this->joint->GetScopedName(), 10.0);
+                    this->joint->GetScopedName(), velocity);
         }
 
         /// \brief Pointer to the model.
