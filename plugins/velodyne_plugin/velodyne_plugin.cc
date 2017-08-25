@@ -1,6 +1,14 @@
 #ifndef _VELODYNE_PLUGIN_HH_
 #define _VELODYNE_PLUGIN_HH_
 
+// ROS
+#include <thread>
+#include "ros/ros.h"
+#include "ros/callback_queue.h"
+#include "ros/subscribe_options.h"
+#include "std_msgs/Float32.h"
+
+// Gazebo
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
 #include <gazebo/transport/transport.hh>
@@ -79,6 +87,36 @@ namespace gazebo {
             // Subscribe to the topic, and register a callback
             this->sub = this->node->Subscribe(topicName,
                     &VelodynePlugin::OnMsg, this);
+
+
+            //-----------------------------------------------------------------
+            // ROS Support
+            //-----------------------------------------------------------------
+            // Initialize ros, if it has not already bee initialized.
+            if (!ros::isInitialized())
+            {
+              int argc = 0;
+              char **argv = NULL;
+              ros::init(argc, argv, "gazebo_client",
+                  ros::init_options::NoSigintHandler);
+            }
+
+            // Create our ROS node. This acts in a similar manner to
+            // the Gazebo node
+            this->rosNode.reset(new ros::NodeHandle("gazebo_client"));
+
+            // Create a named topic, and subscribe to it.
+            ros::SubscribeOptions so =
+              ros::SubscribeOptions::create<std_msgs::Float32>(
+                  "/" + this->model->GetName() + "/vel_cmd",
+                  1,
+                  boost::bind(&VelodynePlugin::OnRosMsg, this, _1),
+                  ros::VoidPtr(), &this->rosQueue);
+            this->rosSub = this->rosNode->subscribe(so);
+
+            // Spin up the queue helper thread.
+            this->rosQueueThread =
+              std::thread(std::bind(&VelodynePlugin::QueueThread, this));
         }
 
         /// \brief Set the velocity of the Velodyne
@@ -97,6 +135,26 @@ namespace gazebo {
         {
           this->SetVelocity(_msg->x());
         }
+
+        //---------------------------------------------------------------------
+        // ROS Support
+        //---------------------------------------------------------------------
+
+        /// \brief A node use for ROS transport
+        private: std::unique_ptr<ros::NodeHandle> rosNode;
+
+        /// \brief A ROS subscriber
+        private: ros::Subscriber rosSub;
+
+        /// \brief A ROS callbackqueue that helps process messages
+        private: ros::CallbackQueue rosQueue;
+
+        /// \brief A thread the keeps running the rosQueue
+        private: std::thread rosQueueThread;
+
+        //---------------------------------------------------------------------
+        // Gazebo Support
+        //---------------------------------------------------------------------
 
         /// \brief Pointer to the model.
         private: physics::ModelPtr model;
