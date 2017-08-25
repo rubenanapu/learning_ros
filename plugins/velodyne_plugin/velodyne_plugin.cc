@@ -140,6 +140,24 @@ namespace gazebo {
         // ROS Support
         //---------------------------------------------------------------------
 
+        /// \brief Handle an incoming message from ROS
+        /// \param[in] _msg A float value that is used to set the velocity
+        /// of the Velodyne.
+        public: void OnRosMsg(const std_msgs::Float32ConstPtr &_msg)
+        {
+          this->SetVelocity(_msg->data);
+        }
+
+        /// \brief ROS helper function that processes messages
+        private: void QueueThread()
+        {
+          static const double timeout = 0.01;
+          while (this->rosNode->ok())
+          {
+            this->rosQueue.callAvailable(ros::WallDuration(timeout));
+          }
+        }
+
         /// \brief A node use for ROS transport
         private: std::unique_ptr<ros::NodeHandle> rosNode;
 
